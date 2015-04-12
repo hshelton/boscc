@@ -1,0 +1,51 @@
+﻿@model IEnumerable<boscc.Models.Course>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h3>Index</h3>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Department)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Level)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Department)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Level)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.CourseNumber }) |
+            @Html.ActionLink("Details", "Details", new { id=item.CourseNumber }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.CourseNumber })
+        </td>
+    </tr>
+}
+
+</table>
