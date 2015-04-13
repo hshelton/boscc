@@ -57,7 +57,9 @@ namespace boscc.Migrations
         //
         protected override void Seed(boscc.Models.ApplicationDbContext context)
         {
+            
             AddUserAndRole(context);
+           
             context.Courses.AddOrUpdate(c => c.CourseNumber,
                 new Course
                 {
@@ -66,9 +68,7 @@ namespace boscc.Migrations
                     Description = "Dne",
                     Level = CourseLevel.OneThousand,
                     Title = "Fake Course",
-                    Dependents = new List <string>(),
-                    Prerequisites = new List<string>(),
-                    RequiredForMajors = new List<string>()
+
 
                 }
 

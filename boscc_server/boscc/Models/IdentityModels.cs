@@ -33,5 +33,6 @@ namespace boscc.Models
         public System.Data.Entity.DbSet<boscc.Models.Contact> Contacts { get; set; }
 
         public System.Data.Entity.DbSet<boscc.Models.Course> Courses { get; set; }
+        public System.Data.Entity.DbSet<boscc.Models.PrerequisiteCourse> Prerequisites { get; set; }
     }
 }

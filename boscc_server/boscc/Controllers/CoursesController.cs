@@ -125,12 +125,38 @@ namespace boscc.Controllers
             Course prereq = db.Courses.Find(prereqCourseNumber);
             bool success = false;
 
-            //add both prereq as a prereq for this and course as a dependent of prereq
+            //if the prerequisite relationship is already established, do nothing vhfb ngjmvwvxscthvtk3
             if(course != null && prereq != null )
             {
-               prereq.AddDependentCourse(courseNumber);
-               success = success && course.AddPrerequisiteCourse(prereqCourseNumber);
-               db.SaveChanges();
+ 
+
+                var prereqsFound = from p in db.Prerequisites
+                                   where p.CourseNumber == prereqCourseNumber && p.DependentCourseNumber == courseNumber
+                                   select p;
+                var list = prereqsFound.ToList();
+                if(list.Count == 0)
+                {
+                    db.Prerequisites.Add(new PrerequisiteCourse(prereqCourseNumber, courseNumber));
+                   if( db.SaveChanges() >= 1)
+                   {
+                       success = true;
+                   }
+
+                   //now add all of the prerequisite course's prerequisites
+
+                   var addThese = from p in db.Prerequisites
+                                  where p.DependentCourseNumber == prereq.CourseNumber
+                                  select p;
+                   var list2 = addThese.ToList();
+                    if(list2.Count() >0)
+                    {
+                        foreach(var p in list2)
+                        {
+                            db.Prerequisites.Add(new PrerequisiteCourse(p.CourseNumber, courseNumber));
+                        }
+                    }
+                    db.SaveChanges();
+                }
             }
 
 

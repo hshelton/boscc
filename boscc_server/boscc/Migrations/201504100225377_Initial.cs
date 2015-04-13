@@ -20,7 +20,16 @@ namespace boscc.Migrations
                         Email = c.String(),
                     })
                 .PrimaryKey(t => t.ContactId);
-            
+            CreateTable(
+            "dbo.Prerequisites",
+            p => new
+              {
+                  PrerequisiteId = p.String(nullable: false),
+                  CourseNumber = p.String(),
+                  DependentCourseNumber = p.String()
+              })
+                .PrimaryKey(p => p.PrerequisiteId);
+
             CreateTable(
                 "dbo.AspNetRoles",
                 c => new

@@ -7,6 +7,21 @@ using System.Data.Entity.Core;
 using System.ComponentModel.DataAnnotations;
 namespace boscc.Models
 {
+
+
+    public class entityId
+    {
+        public  string generateId()
+        {
+            Guid g = Guid.NewGuid();
+            string GuidString = Convert.ToBase64String(g.ToByteArray());
+            GuidString = GuidString.Replace("=", "");
+            GuidString = GuidString.Replace("+", "");
+            return GuidString;
+        }
+    }
+
+
     public enum CourseLevel
     {
        Remedial = 0,
@@ -31,38 +46,41 @@ namespace boscc.Models
         [Key]
         public string CourseNumber { get; set; }
         public string Description { get; set; }
-        public List<string> Prerequisites { get; set; }
-        public List<string> Dependents { get; set; }
+
         public CourseLevel Level { get; set; }
-        public List<string> RequiredForMajors { get; set; }
- 
+    }
 
-        public bool AddPrerequisiteCourse(string courseNumber)
+    public class PrerequisiteCourse
+    {
+        [Key]
+        public string PrerequisiteId { get; set; }
+        public string CourseNumber { get; set; }
+        public string DependentCourseNumber { get; set; }
+
+        public PrerequisiteCourse()
         {
-            if(Prerequisites == null)
-            {
-                Prerequisites = new List<string>();
-            }
-            if(!Prerequisites.Contains(courseNumber))
-            {
-                Prerequisites.Add(courseNumber);
-                return true;
-            }
-            return false;
+
+        }
+        /// <summary>
+        /// Creates a new PrerequisiteCourse association
+        /// </summary>
+        /// <param name="courseNumber">The prerequisite course. eg. CS1410</param>
+        /// <param name="prerequisiteCourseNumber">The the dependent course. eg. CS2420</param>
+        public PrerequisiteCourse(string prereqNumber, string dependentNumber)
+        {
+            CourseNumber = prereqNumber;
+            DependentCourseNumber = dependentNumber;
+            generateId();
         }
 
-        public bool AddDependentCourse(string courseNumber)
+        private void generateId()
         {
-            if (Dependents == null)
-            {
-                Dependents = new List<string>();
-            }
-            if (!Dependents.Contains(courseNumber))
-            {
-                Dependents.Add(courseNumber);
-                return true;
-            }
-            return false;
+            Guid g = Guid.NewGuid();
+            string GuidString = Convert.ToBase64String(g.ToByteArray());
+            GuidString = GuidString.Replace("=","");
+            GuidString = GuidString.Replace("+","");
+            PrerequisiteId = GuidString;
         }
+
     }
 }
