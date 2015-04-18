@@ -8,13 +8,16 @@
 
 import UIKit
 
-class ApplicationViewController: UIViewController, AppStateChangedResponder {
+class ApplicationViewController: UIViewController, AppStateChangedResponder, UIPopoverPresentationControllerDelegate {
 
     var portraitView: PortraitSplashView = PortraitSplashView()
     var landscapeView: LandscapeSplashView = LandscapeSplashView()
+    var menueViewController: MenueViewController = MenueViewController()
+    var vizVC: VizViewController = VizViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.navigationBarHidden = true
     
     }
 
@@ -23,6 +26,9 @@ class ApplicationViewController: UIViewController, AppStateChangedResponder {
     view = portraitView
     portraitView.delegate = self
     landscapeView.delegate = self
+    menueViewController.delegate = self
+    
+    navigationController?.navigationBarHidden = true
  
     }
     override func didReceiveMemoryWarning() {
@@ -34,12 +40,24 @@ class ApplicationViewController: UIViewController, AppStateChangedResponder {
         switch(reason)
         {
             case "initial":
-            self.navigationController?.pushViewController(InitialViewController(), animated: true)
+       
+                break
+            case "Toggle":
             
-            default:
+            navigationController?.pushViewController(menueViewController, animated: true)
+            break
+            case "Close":
+            navigationController?.popToRootViewControllerAnimated(true)
+            
+            case "Viz":
+
+            navigationController?.pushViewController(vizVC, animated: true)
+        default:
             return
         }
     }
+    
+
     
     override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
         if (self.interfaceOrientation == UIInterfaceOrientation.LandscapeLeft || self.interfaceOrientation == UIInterfaceOrientation.LandscapeRight)

@@ -12,6 +12,7 @@ class PortraitSplashView: UIView {
     
     let colors: ColorPallette = ColorPallette()
     private var _titleLabel: UILabel! = nil
+    private var _menueButton: UIButton = UIButton()
 
     weak var delegate: AppStateChangedResponder? = nil
     override init (frame: CGRect)
@@ -29,6 +30,10 @@ class PortraitSplashView: UIView {
         _titleLabel.font = UIFont.boldSystemFontOfSize(80.0)
 
         addSubview(_titleLabel)
+    
+        _menueButton.backgroundColor = UIColor(patternImage: UIImage(named: "hamburger.png")!)
+        _menueButton.addTarget(self, action: "Toggle", forControlEvents: UIControlEvents.TouchUpInside)
+        addSubview(_menueButton)
     }
 
     required init(coder aDecoder: NSCoder)
@@ -40,9 +45,14 @@ class PortraitSplashView: UIView {
     override func layoutSubviews()
     {
         _titleLabel.frame = CGRect(x: 0, y: bounds.midY - 100, width: bounds.width, height: 200)
+ 
+        _menueButton.frame = CGRectMake(10, 25, 40, 40)
     }
 
-    
+    func Toggle()
+    {
+        delegate?.AppStateChanged("Toggle")
+    }
     
 }
 
@@ -52,6 +62,7 @@ class LandscapeSplashView: UIView {
     let colors: ColorPallette = ColorPallette()
     private var _titleLabel: UILabel! = nil
       weak var delegate: AppStateChangedResponder? = nil
+    private var _menueButton: UIButton = UIButton()
     
     override init (frame: CGRect)
     {
@@ -68,6 +79,10 @@ class LandscapeSplashView: UIView {
         _titleLabel.font = UIFont.boldSystemFontOfSize(125.0)
         
         addSubview(_titleLabel)
+        
+        _menueButton.backgroundColor = UIColor(patternImage: UIImage(named: "hamburger.png")!)
+        _menueButton.addTarget(self, action: "Toggle", forControlEvents: UIControlEvents.TouchUpInside)
+        addSubview(_menueButton)
     }
     
     required init(coder aDecoder: NSCoder)
@@ -79,8 +94,12 @@ class LandscapeSplashView: UIView {
     override func layoutSubviews()
     {
         _titleLabel.frame = CGRect(x: 0, y: bounds.midY - 100, width: bounds.width, height: 200)
+        _menueButton.frame = CGRectMake(10, 25, 40, 40)
     }
     
-    
+    func Toggle()
+    {
+        delegate?.AppStateChanged("Toggle")
+    }
     
 }
