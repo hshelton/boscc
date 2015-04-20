@@ -16,14 +16,12 @@ weak var delegate: AppStateChangedResponder? = nil
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         
     }
     
     
     override func loadView() {
-       
-        mv.delegate = self
+       mv.delegate = self
          view = mv
     }
     

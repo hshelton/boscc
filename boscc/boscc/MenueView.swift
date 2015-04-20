@@ -19,15 +19,12 @@ class MenueView: UIView {
     private var _titleLabel: UILabel = UILabel()
     
     weak var delegate: AppStateChangedResponder? = nil
-    override init (frame: CGRect)
-    {
-        super.init(frame: frame)
-    }
+ 
     
-    override init()
+    override init(frame: CGRect)
     {
-        super.init()
-       
+    
+        super.init(frame: frame)
         
         _back.setBackgroundImage(UIImage(named: "back.png"), forState: UIControlState.Normal)
         _back.addTarget(self, action: "Toggle", forControlEvents: UIControlEvents.TouchUpInside)
@@ -71,7 +68,7 @@ class MenueView: UIView {
     {
         var r: CGRect = bounds; var temp :CGRect = CGRectZero
         
-        _back.frame = CGRect(x: 10, y: 25, width: 35, height: 35)
+        _back.frame = CGRect(x: 10, y: 20, width: 30, height: 30)
         
         (temp, r) = bounds.rectsByDividing(r.height/2, fromEdge: .MinYEdge)
         _titleLabel.frame = temp

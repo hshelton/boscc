@@ -15,14 +15,11 @@ class PortraitSplashView: UIView {
     private var _menueButton: UIButton = UIButton()
 
     weak var delegate: AppStateChangedResponder? = nil
-    override init (frame: CGRect)
+ 
+    
+    override init(frame: CGRect)
     {
         super.init(frame: frame)
-    }
-    
-    override init()
-    {
-        super.init()
         backgroundColor = colors.bosccGreen
         _titleLabel = UILabel()
         _titleLabel.text = "boscc"; _titleLabel.textAlignment = NSTextAlignment.Center
@@ -64,14 +61,10 @@ class LandscapeSplashView: UIView {
       weak var delegate: AppStateChangedResponder? = nil
     private var _menueButton: UIButton = UIButton()
     
-    override init (frame: CGRect)
+    
+    override init(frame: CGRect)
     {
         super.init(frame: frame)
-    }
-    
-    override init()
-    {
-        super.init()
         backgroundColor = colors.bosccGreen
         _titleLabel = UILabel()
         _titleLabel.text = "boscc"; _titleLabel.textAlignment = NSTextAlignment.Center
