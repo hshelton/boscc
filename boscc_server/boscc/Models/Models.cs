@@ -50,6 +50,39 @@ namespace boscc.Models
         public CourseLevel Level { get; set; }
     }
 
+    public class UserInMajor
+    {
+        [Key]
+        public string Id { get; set; }
+        public string Major { get; set; }
+    }
+
+    public class CourseThatMustBeTaken
+    {
+        [Key]
+        public int Id { get; set; }
+        public string Major { get; set; }
+        public string CourseNumber { get; set; }
+    }
+
+    public class CourseTaken
+    {
+        [Key]
+        public int Id { get; set; }
+        public string uid { get; set; }
+        public string CourseNumber { get; set; }
+    }
+    public class CoursePossibilityForMajor
+    {
+        [Key]
+        public int Id { get; set; }
+        public string major { get; set; }
+        public string CourseNumber { get; set; }
+        public string attributeCode { get; set; }
+    }
+
+
+
     public class PrerequisiteCourse
     {
         [Key]

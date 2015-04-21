@@ -34,5 +34,9 @@ namespace boscc.Models
 
         public System.Data.Entity.DbSet<boscc.Models.Course> Courses { get; set; }
         public System.Data.Entity.DbSet<boscc.Models.PrerequisiteCourse> Prerequisites { get; set; }
+        public System.Data.Entity.DbSet<boscc.Models.UserInMajor> UserInMajors { get; set; }
+        public System.Data.Entity.DbSet<boscc.Models.CourseThatMustBeTaken> CoursesThatMustBeTakenForMajors { get; set; }
+        public System.Data.Entity.DbSet<boscc.Models.CoursePossibilityForMajor> CoursePossibilities { get; set; }
+        public System.Data.Entity.DbSet<boscc.Models.CourseTaken> CourseTaken { get; set; }
     }
 }
