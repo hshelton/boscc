@@ -10,6 +10,9 @@ namespace boscc.Models
         public string CourseTitle { get; set; }
         public bool Completed { get; set; }
         public string NDegree { get; set; }
-        public string ParentCourseNumber { get; set; }
+        public bool isFlex { get; set; }
+        public string CourseNumber { get; set; }
+        public string FlexDescription { get; set; }
+       
     }
 }

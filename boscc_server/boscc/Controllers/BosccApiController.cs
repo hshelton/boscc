@@ -135,33 +135,70 @@ namespace boscc.Controllers
         // GET: api/Api/5
         public JsonResult GetCourseNodes(string uid)
         {
-
-
+            //figure out major
+            bool ok = false;
             object[] p = new object[1];
             p[0] = uid;
             var tuple = db.UserInMajors.Find(p);
             string major = "null";
             if (major != null)
             {
+                ok = true;
                 major = tuple.Major;
             }
-
-
-            var results = db.CoursesThatMustBeTakenForMajors.Where(c => c.Major == major);
-            List<CourseThatMustBeTaken> found = new List<CourseThatMustBeTaken>();
-            if(results != null)
+            if(ok)
             {
-                found = results.ToList();
+
             }
+            List<CourseNode> results = new List<CourseNode>();
+
+
+            //figure out which courses they've taken
+            var coursesTaken1 = db.getCoursesTakenForMajor(uid);
+          
+            if(ok)
+            {
+                //add these taken courses to the results list
+            foreach(var ct in coursesTaken1)
+            {
+                string title = db.getCourseTitle(ct.CourseNumber);
+      
+                results.Add(new CourseNode{Completed = true, CourseNumber = ct.CourseNumber, CourseTitle = title, isFlex = false, NDegree = db.getNDegree(ct.CourseNumber) });
+            }
+
+            }
+
+            //figure out what they still need to take
+            List<string> courseNumbersNeeded1 = db.getCourseNumbersForMajor(major);
+    
+
+           if(ok)
+           {
+               foreach(var s in courseNumbersNeeded1)
+               {
+                   if( results.Any(c => c.CourseNumber == s) == false)
+                   {
+                       var course = db.getCourse(s);
+                       if (course != null)
+                           results.Add(new CourseNode { Completed = false, CourseNumber = course.CourseNumber, CourseTitle = course.Title, isFlex = false, NDegree = course.Level.ToString() });
+                   }
+               }
+
+           }
+
+            //todo: get all the flex requirements they need and have taken. we don't need to know the course, simply the flexname short description, and whether or not they've taken it
+            var flexTaken = from db.c
+
+
             var jsonSerialiser = new JavaScriptSerializer();
-            var json = jsonSerialiser.Serialize(found);
+            var json = jsonSerialiser.Serialize(results);
 
             return new JsonResult
             {
                 Data = new
                 {
                  major = major,
-                 results = found
+                 coursesNeeded = results
 
                 },
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet

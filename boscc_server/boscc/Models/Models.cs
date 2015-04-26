@@ -39,6 +39,8 @@ namespace boscc.Models
         Finance
     }
 
+ 
+
     public class Course
     {
         public string Department { get; set; }
@@ -57,32 +59,46 @@ namespace boscc.Models
         public string Major { get; set; }
     }
 
-    public class CourseThatMustBeTaken
+    public class MajorRequirement
     {
         [Key]
         public int Id { get; set; }
-        public string Major { get; set; }
-        public string CourseNumber { get; set; }
+        public string department { get; set; }
+        public string coursenumber { get; set; }
     }
-
     public class CourseTaken
     {
         [Key]
         public int Id { get; set; }
-        public string uid { get; set; }
+        public string userId { get; set; }
         public string CourseNumber { get; set; }
     }
-    public class CoursePossibilityForMajor
+    public class FlexRequirement
     {
         [Key]
         public int Id { get; set; }
+        public string flexname { get; set; }
         public string major { get; set; }
+        public string flexdescription { get; set; }
+    }
+    //if the course doesn't meet a major requirement, assume it's taken for a flex requirements
+    public class CourseTakenForFlex
+    {
+        [Key]
+        public int Id { get; set; }
+        public string flexname { get; set; }
         public string CourseNumber { get; set; }
-        public string attributeCode { get; set; }
+    
+        public string uid { get; set; }
     }
 
-
-
+    public class SatisfiesFlex
+    {
+        [Key]
+        public int Id { get; set; }
+        public string CourseNumber { get; set; }
+        public string flexname { get; set; }
+    }
     public class PrerequisiteCourse
     {
         [Key]
