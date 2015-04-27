@@ -22,6 +22,7 @@
 		BC68DD931AE3034700779E0E /* texture.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BC68DD921AE3034700779E0E /* texture.jpg */; };
 		BC6E7A521ADC98CF007BDF6C /* hamburger.png in Resources */ = {isa = PBXBuildFile; fileRef = BC6E7A511ADC98CF007BDF6C /* hamburger.png */; };
 		BC6E7A541ADC9B78007BDF6C /* MenueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC6E7A531ADC9B78007BDF6C /* MenueViewController.swift */; };
+		BCDF2F6D1AEECD370093D464 /* CourseNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDF2F6C1AEECD370093D464 /* CourseNode.swift */; };
 		BCE9B93A1AE1D12F00895A80 /* settingsButton.png in Resources */ = {isa = PBXBuildFile; fileRef = BCE9B9391AE1D12F00895A80 /* settingsButton.png */; };
 		BCE9B9561AE1D5ED00895A80 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = BCE9B9551AE1D5ED00895A80 /* back.png */; };
 		BCE9B95A1AE1D83300895A80 /* VizViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE9B9591AE1D83300895A80 /* VizViewController.swift */; };
@@ -61,6 +62,7 @@
 		BC68DD921AE3034700779E0E /* texture.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = texture.jpg; path = boscc/texture.jpg; sourceTree = "<group>"; };
 		BC6E7A511ADC98CF007BDF6C /* hamburger.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = hamburger.png; path = boscc/hamburger.png; sourceTree = "<group>"; };
 		BC6E7A531ADC9B78007BDF6C /* MenueViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenueViewController.swift; sourceTree = "<group>"; };
+		BCDF2F6C1AEECD370093D464 /* CourseNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseNode.swift; sourceTree = "<group>"; };
 		BCE9B9391AE1D12F00895A80 /* settingsButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = settingsButton.png; path = boscc/settingsButton.png; sourceTree = "<group>"; };
 		BCE9B9551AE1D5ED00895A80 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = back.png; path = boscc/back.png; sourceTree = "<group>"; };
 		BCE9B9591AE1D83300895A80 /* VizViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VizViewController.swift; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 				BCE9B95D1AE1D89F00895A80 /* StudentDataModel.swift */,
 				BC66F8581AED772800240115 /* ApiConnection.swift */,
 				BC66F85A1AED7DDC00240115 /* BosccStudent.swift */,
+				BCDF2F6C1AEECD370093D464 /* CourseNode.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -310,6 +313,7 @@
 				BC66F85D1AED8E9700240115 /* SettingsViewController.swift in Sources */,
 				6AFCA62D1AD5EC8100176DB8 /* SplashView.swift in Sources */,
 				6AFCA6301AD5EDC100176DB8 /* ColorModel.swift in Sources */,
+				BCDF2F6D1AEECD370093D464 /* CourseNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

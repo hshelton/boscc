@@ -37,6 +37,10 @@ class ApplicationViewController: UIViewController, AppStateChangedResponder, UIP
         user.uname = con.getUname()
         user.uid = con.getUid()
         user.major = con.getMajor()
+        
+
+        
+        
     }
     portraitView.delegate = self
     landscapeView.delegate = self
@@ -45,11 +49,24 @@ class ApplicationViewController: UIViewController, AppStateChangedResponder, UIP
     menueViewController.delegate = self
     settingsVC.delegate = self
     settingsVC.modelDelegate = self
+    vizVC.modelDelegate = self
     
     if(user.uid != nil)
     {
-        portraitView._welcomeLabel.text = user.uname
-        landscapeView._welcomeLabel.text = user.uname
+        portraitView._welcomeLabel.text = "Welcome, \n" +
+        user.uname!
+        portraitView._welcomeLabel.numberOfLines = 0
+        portraitView._welcomeLabel.lineBreakMode = NSLineBreakMode.ByWordWrapping
+        portraitView._welcomeLabel.font = UIFont.boldSystemFontOfSize(14.0)
+        portraitView._welcomeLabel.frame = CGRect(x: UIScreen.mainScreen().bounds.width - 50, y: 10, width: 180, height:60)
+   
+        landscapeView._welcomeLabel.text = "Welcome, \n" +
+        user.uname!
+        landscapeView._welcomeLabel.numberOfLines = 0
+        landscapeView._welcomeLabel.lineBreakMode = NSLineBreakMode.ByWordWrapping
+        landscapeView._welcomeLabel.font = UIFont.boldSystemFontOfSize(14.0)
+        
+        landscapeView._welcomeLabel.frame = CGRect(x: UIScreen.mainScreen().bounds.width - 250, y: 10, width: 200, height: 60)
     }
     view = portraitView
 

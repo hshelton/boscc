@@ -12,19 +12,47 @@ class CourseButton : UIButton
 {
     
     var tL: UILabel = UILabel()
+    var courseNumber: String = "NA"
+    var flexName: String = "NA"
     var networkColored = false
-    
+    var isFlex: Bool = false
+    var inProgress: Bool = false
+    var complete: Bool = false
     let colors = ColorPallette()
     
     var toggleSwitch: Int = 1
     
-    override init(frame: CGRect) {
-        
+    init(frame: CGRect, courseNumberOrFlexName: String,  _isFlex: Bool, _inProgress: Bool, _complete: Bool)
+    {
         super.init(frame: frame)
-        tL.text = "CS1410"
+        tL.text = courseNumberOrFlexName
         tL.textAlignment = NSTextAlignment.Center
         tL.frame = frame
         tL.frame.offset(dx: 0, dy: -5)
+        if(_isFlex)
+        {
+            flexName = courseNumberOrFlexName
+            isFlex = true
+        }
+        else
+        {
+            courseNumber = courseNumberOrFlexName
+        }
+        if(_inProgress)
+        {
+            toggleSwitch = 3
+            inProgress = true
+        }
+        else if(_complete)
+        {
+            toggleSwitch = 2
+            complete = true
+        }
+            //take care of nonsensical parameters
+        else if(!_inProgress && !complete || _inProgress && _complete)
+        {
+            inProgress = false; complete = false
+        }
         addSubview(tL)
         var gesture: UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: "showMessage")
         
@@ -32,8 +60,14 @@ class CourseButton : UIButton
         
         self.addGestureRecognizer(gesture)
         
+        self.addTarget(self, action: "toggleColor", forControlEvents: UIControlEvents.TouchDownRepeat)
+    }
+    
+    
+    override init(frame: CGRect) {
         
-       self.addTarget(self, action: "toggleColor", forControlEvents: UIControlEvents.TouchDownRepeat)
+        super.init(frame: frame)
+
     }
 
     required init(coder aDecoder: NSCoder) {

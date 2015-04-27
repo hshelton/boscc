@@ -21,7 +21,7 @@ class SettingsView: UIView, UIPickerViewDataSource, UIPickerViewDelegate, UIText
     var loggedIn: Bool = false
     var _back: UIButton = UIButton()
     var _ok: UIButton = UIButton()
-     var major: String = ""
+     var major: String = "CS"
     var _label: UILabel = UILabel()
     
     weak var delegate: AppStateChangedResponder? = nil
@@ -46,6 +46,7 @@ class SettingsView: UIView, UIPickerViewDataSource, UIPickerViewDelegate, UIText
         if(loggedIn)
         {
             addSubview(majorPicker)
+            addSubview(_back)
         }
         else
         {
@@ -166,6 +167,7 @@ class SettingsView: UIView, UIPickerViewDataSource, UIPickerViewDelegate, UIText
         {
             majorPicker.frame = CGRect(x: CGFloat(0.0), y: bounds.midY - 100, width: bounds.width, height: CGFloat(100))
               _back.frame = CGRect(x: 10, y: 20, width: 30, height: 30)
+            
         }
         else
         {

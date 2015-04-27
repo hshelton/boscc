@@ -61,6 +61,44 @@ class ApiConnection
         }
     }
     
+    func GetCourseNodes(uid: String) -> (courses: [CourseNode], success: Bool)
+    {
+        var err: NSError?
+        let request = NSMutableURLRequest(URL: NSURL(string: "http://boscc.io/bosccapi/GetCourseNodes?uid=\(uid)")!)
+        request.HTTPMethod = "GET"
+       // request.setValue("application/json", forHTTPHeaderField: "content-type")
+
+        var data = NSURLConnection.sendSynchronousRequest(request, returningResponse: nil, error: nil)
+        var ret = [CourseNode]()
+        if(data == nil)
+        {
+            
+            return (ret, false)
+        }
+        
+        let gameAttributions: NSDictionary = NSJSONSerialization.JSONObjectWithData(data!, options: .allZeros, error: nil)! as! NSDictionary
+        
+        var majorReturned: String = gameAttributions["major"] as! String
+        var coursesNeeded: [NSDictionary] = gameAttributions["coursesNeeded"] as! [NSDictionary]
+        
+        for entr in coursesNeeded
+        {
+            
+                var ok: String? = entr["CourseNumber"] as? String
+                
+                if(ok != nil)
+                {
+                     ret.append(CourseNode(_completed: entr["Completed"] as! Bool, _CourseNumber: entr["CourseNumber"] as! String , _CourseTitle: entr["CourseTitle"] as! String))
+                }
+        
+   
+        }
+       
+       
+        return (ret, true)
+        
+    }
+    
     func RegisterStudent(email: String, password: String, major: String, username: String) -> String
     {
         var err: NSError?
@@ -87,21 +125,17 @@ class ApiConnection
             entry["uid"] = gameAttributions["id"] as? String
             entry["major"] = major
             entry["uname"] = username
-            
             dict.addObject(entry)
             ToFile()
-            
             return "success"
-
         }
-        
         return gameAttributions["message"] as! String
     }
     
     func ToFile()
     {
         let documentsDirectory: String? = NSSearchPathForDirectoriesInDomains( .DocumentDirectory, .UserDomainMask, true)?[0] as! String?
-        let filePath: String? = documentsDirectory?.stringByAppendingPathComponent("bosccConfig13.txt")
+        let filePath: String? = documentsDirectory?.stringByAppendingPathComponent("bosccConf.txt")
         var arr: NSMutableArray = []
         
         
@@ -120,7 +154,7 @@ class ApiConnection
     func LoadFile()
     {
         let documentsDirectory: String? = NSSearchPathForDirectoriesInDomains( .DocumentDirectory, .UserDomainMask, true)?[0] as! String?
-        let filePath: String? = documentsDirectory?.stringByAppendingPathComponent("bosccConfig13.txt")
+        let filePath: String? = documentsDirectory?.stringByAppendingPathComponent("bosccConf.txt")
         //load in the file to memory
         let fileText = String(contentsOfFile: filePath!, encoding: NSUTF8StringEncoding, error: nil)
         dict = []

@@ -14,6 +14,7 @@ class VizViewController: UIViewController, UIScrollViewDelegate {
     var colors = ColorPallette()
     var _back: UIButton = UIButton();
     var _label: UILabel = UILabel()
+     weak var modelDelegate: UserModelExchanger? = nil
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -24,25 +25,54 @@ class VizViewController: UIViewController, UIScrollViewDelegate {
         super.viewDidLoad()
 
         var buttonHeight: CGFloat = 85.0
+        var user: BosccStudent = modelDelegate!.RequestUserModel()
+        var courses: [CourseNode] = [CourseNode]()
+        var ok: Bool = false
+        var con: ApiConnection = ApiConnection()
+        (courses, ok) = con.GetCourseNodes(user.uid!)
         
+        if(!ok)
+        {
+            var msg = "Something went wrong while talking to the server. If the error persists, email support for assistance. See help page for more details"
+            var alert = UIAlertController(title: "Alert", message: msg, preferredStyle: UIAlertControllerStyle.ActionSheet)
+            alert.addAction(UIAlertAction(title: "Retry", style: UIAlertActionStyle.Default, handler: {(alert: UIAlertAction!) in
+                
+                self.navigationController?.popToRootViewControllerAnimated(false)}))
+            
+            self.navigationController?.presentViewController(alert, animated: false, completion: nil)
+          
+   
+ 
+        
+        }
         if(UIDevice.currentDevice().orientation == UIDeviceOrientation.LandscapeLeft || UIDevice.currentDevice().orientation == UIDeviceOrientation.LandscapeRight)
         {
             graphView = VizView(frame: CGRect(x: 0, y: 0, width: view.bounds.width * 2, height: 1000))
             buttonHeight = 60
             
-            for var i = 0; i < 48; i++
+            for c in courses
             {
-                graphView.addCourseButtonLandscape(CourseButton(frame: CGRect(x: 0.0, y: 8, width: view.bounds.width*2/6, height: buttonHeight)), name: "Course \(i)")
+                var dn: String = ""
+                
+            
+                var temp: CourseButton = CourseButton(frame: CGRect(x: 0.0, y: 8, width: view.bounds.width*2/6, height: buttonHeight), courseNumberOrFlexName: c.CourseNumber,  _isFlex: c.IsFlex, _inProgress: false, _complete: c.Complete)
+                
+                graphView.addCourseButton(temp, name: c.CourseNumber)
             }
+          
         }
         else
         {
             graphView = VizView(frame: CGRect(x: 0, y: 0, width: view.bounds.width * 2, height: 1400))
-            for var i = 0; i < 48; i++
+            for c in courses
             {
-                graphView.addCourseButton(CourseButton(frame: CGRect(x: 0.0, y: 8, width: view.bounds.width*2/4, height: buttonHeight)), name: "Course \(i)")
+                var dn: String = ""
+                
+                
+                var temp: CourseButton = CourseButton(frame: CGRect(x: 0.0, y: 8, width: view.bounds.width*2/6, height: buttonHeight), courseNumberOrFlexName: c.CourseNumber,  _isFlex: c.IsFlex, _inProgress: false, _complete: c.Complete)
+                
+                graphView.addCourseButton(temp, name: c.CourseNumber)
             }
-            
         }
         
 
@@ -101,6 +131,11 @@ class VizViewController: UIViewController, UIScrollViewDelegate {
         {
            viewDidLoad()
         }
+    }
+    
+    func poptoroot()
+    {
+        self.navigationController?.popToRootViewControllerAnimated(false)
     }
    
     func Toggle()
