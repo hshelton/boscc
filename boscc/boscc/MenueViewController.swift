@@ -36,6 +36,10 @@ weak var delegate: AppStateChangedResponder? = nil
     case "Viz":
         delegate?.AppStateChanged("Viz")
         break;
+        
+    case "Settings":
+        delegate?.AppStateChanged("Settings")
+        break;
     default:
         return
     }

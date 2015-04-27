@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "boscc/ApplicationViewController.swift"
-            timestampString = "451009620.342906"
+            timestampString = "451796858.710269"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "46"
-            endingLineNumber = "46"
+            startingLineNumber = "69"
+            endingLineNumber = "69"
             landmarkName = "AppStateChanged(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "boscc/MenueView.swift"
-            timestampString = "451013555.285438"
+            timestampString = "451776495.525256"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "60"
-            endingLineNumber = "60"
+            startingLineNumber = "61"
+            endingLineNumber = "61"
             landmarkName = "MenueView"
             landmarkType = "3">
          </BreakpointContent>
