@@ -28,7 +28,7 @@ namespace boscc.Controllers
 
         // POST: api/Api
         //create a username and password that the student can use to sign in. Return an id for the api
-        public JsonResult PostRegister(string username, string password, string email)
+        public JsonResult PostRegister(string username, string password, string email, string major)
         {
             bool success = false;
             string message = "Registered user";
@@ -55,7 +55,7 @@ namespace boscc.Controllers
             }
             db.SaveChanges();
             //create a new user in major entry for them to use later
-            var UIM = new UserInMajor { Id = user.Id, Major = "Undecided" };
+            var UIM = new UserInMajor { Id = user.Id, Major = major };
             db.UserInMajors.Add(UIM);
             db.SaveChanges();
          
@@ -68,7 +68,30 @@ namespace boscc.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
-
+        
+        public async Task<JsonResult> ToggleCourseCompletion(string coursenumber, string uid)
+        {
+            if(db.Courses.Where(c => c.CourseNumber == coursenumber).Count()>0)
+            {
+                var qRes = db.CourseTaken.Where(ct => (ct.userId == uid && ct.CourseNumber == coursenumber));
+                if(qRes.Count()>0)
+                {
+                   db.CourseTaken.RemoveRange(qRes.ToList());
+                   db.SaveChanges();
+                }
+                else
+                {
+                    var ct = new CourseTaken { CourseNumber = coursenumber, userId = uid };
+                    db.CourseTaken.Add(ct);
+                    await db.SaveChangesAsync();
+                }
+            }
+            return new JsonResult
+            {
+                Data = new {success = true},
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
 
         public JsonResult PutUserInMajor(string uid, string major)
         {
@@ -132,6 +155,41 @@ namespace boscc.Controllers
             return null;
         }
 
+        public JsonResult GetPrerequisitesOfCourse(string cno)
+        {
+            List<string> pList = new List<string>();
+            var dependents = db.Prerequisites.Where(p => p.DependentCourseNumber == cno);
+            if (dependents.Count() >= 1)
+            {
+                var l = dependents.ToList();
+                foreach (var d in l)
+                    pList.Add(d.CourseNumber);
+            }
+            return new JsonResult
+            {
+                Data = new { courses = pList },
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+
+        public JsonResult GetDependentsOfCourse(string cno)
+        {
+            List<string> depList = new List<string>();
+            var dependents = db.Prerequisites.Where(p => p.CourseNumber == cno);
+            if(dependents.Count()>=1)
+            {
+                var l = dependents.ToList();
+                foreach(var d in l)
+                    depList.Add(d.DependentCourseNumber);
+            }
+            return new JsonResult
+            {
+                Data = new { courses = depList },
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
         // GET: api/Api/5
         public JsonResult GetCourseNodes(string uid)
         {
@@ -141,37 +199,27 @@ namespace boscc.Controllers
             p[0] = uid;
             var tuple = db.UserInMajors.Find(p);
             string major = "null";
-            if (major != null)
+            if (tuple != null)
             {
                 ok = true;
                 major = tuple.Major;
             }
-            if(ok)
-            {
-
-            }
             List<CourseNode> results = new List<CourseNode>();
-
-
             //figure out which courses they've taken
             var coursesTaken1 = db.getCoursesTakenForMajor(uid);
           
             if(ok)
             {
                 //add these taken courses to the results list
-            foreach(var ct in coursesTaken1)
-            {
-                string title = db.getCourseTitle(ct.CourseNumber);
-      
-                results.Add(new CourseNode{Completed = true, CourseNumber = ct.CourseNumber, CourseTitle = title, isFlex = false, NDegree = db.getNDegree(ct.CourseNumber) });
-            }
-
+                foreach(var ct in coursesTaken1)
+                {
+                    string title = db.getCourseTitle(ct.CourseNumber);
+                    results.Add(new CourseNode{Completed = true, CourseNumber = ct.CourseNumber, CourseTitle = title, isFlex = false, NDegree = db.getNDegree(ct.CourseNumber) });
+                }
             }
 
             //figure out what they still need to take
             List<string> courseNumbersNeeded1 = db.getCourseNumbersForMajor(major);
-    
-
            if(ok)
            {
                foreach(var s in courseNumbersNeeded1)
@@ -185,9 +233,9 @@ namespace boscc.Controllers
                }
 
            }
-
+           results.Sort(new sortHelper());
             //todo: get all the flex requirements they need and have taken. we don't need to know the course, simply the flexname short description, and whether or not they've taken it
-            var flexTaken = from db.c
+         //   var flexTaken = from db.c
 
 
             var jsonSerialiser = new JavaScriptSerializer();
@@ -199,7 +247,6 @@ namespace boscc.Controllers
                 {
                  major = major,
                  coursesNeeded = results
-
                 },
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };

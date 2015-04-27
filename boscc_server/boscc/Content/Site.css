@@ -50,3 +50,12 @@ textarea {
     border-radius:3px;
     box-shadow: grey 5px 5px 5px;
 }
+tbody
+{
+    background-color:white;
+    box-shadow: rgb(0, 0, 0), 10px, 10px inset;
+}
+
+tr:nth-child(even) {
+    background-color: #e3f1f7;
+}
