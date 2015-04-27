@@ -52,11 +52,18 @@ namespace boscc.Models
 
         public Course getCourse(string cno)
         {
-            var q = (from a in Courses
-                     where a.CourseNumber == cno
-                     select a).First();
-
-            return q;
+            try
+            {
+                var q = (from a in Courses
+                         where a.CourseNumber == cno
+                         select a).First();
+                return q;
+            }
+            catch
+            {
+                return new Course();
+            }
+           
         }
 
 
