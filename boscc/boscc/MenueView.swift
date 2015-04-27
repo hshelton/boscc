@@ -37,6 +37,7 @@ class MenueView: UIView {
        
         _settings.setTitle("Settings", forState: .Normal)
         _settings.backgroundColor = colors.darkGray
+        _settings.addTarget(self, action: "Settings", forControlEvents: UIControlEvents.TouchUpInside)
      
         _helpButton.setTitle("Help", forState: UIControlState.Normal)
         _helpButton.backgroundColor = colors.darkGray
@@ -80,6 +81,11 @@ class MenueView: UIView {
         _settings.frame.offset(dx: 0.0, dy: 0.0)
         _helpButton.frame.offset(dx: 0.0, dy: 2.0)
         setNeedsDisplay()
+    }
+    
+    func Settings()
+    {
+        delegate?.AppStateChanged("Settings")
     }
     
     func Toggle()
