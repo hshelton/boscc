@@ -23,6 +23,8 @@
 		BC6E7A521ADC98CF007BDF6C /* hamburger.png in Resources */ = {isa = PBXBuildFile; fileRef = BC6E7A511ADC98CF007BDF6C /* hamburger.png */; };
 		BC6E7A541ADC9B78007BDF6C /* MenueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC6E7A531ADC9B78007BDF6C /* MenueViewController.swift */; };
 		BCDF2F6D1AEECD370093D464 /* CourseNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDF2F6C1AEECD370093D464 /* CourseNode.swift */; };
+		BCDF2F6F1AEF2FA40093D464 /* CourseDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDF2F6E1AEF2FA40093D464 /* CourseDetailView.swift */; };
+		BCDF2F711AEF33010093D464 /* CD.xib in Resources */ = {isa = PBXBuildFile; fileRef = BCDF2F701AEF33010093D464 /* CD.xib */; };
 		BCE9B93A1AE1D12F00895A80 /* settingsButton.png in Resources */ = {isa = PBXBuildFile; fileRef = BCE9B9391AE1D12F00895A80 /* settingsButton.png */; };
 		BCE9B9561AE1D5ED00895A80 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = BCE9B9551AE1D5ED00895A80 /* back.png */; };
 		BCE9B95A1AE1D83300895A80 /* VizViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE9B9591AE1D83300895A80 /* VizViewController.swift */; };
@@ -63,6 +65,8 @@
 		BC6E7A511ADC98CF007BDF6C /* hamburger.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = hamburger.png; path = boscc/hamburger.png; sourceTree = "<group>"; };
 		BC6E7A531ADC9B78007BDF6C /* MenueViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenueViewController.swift; sourceTree = "<group>"; };
 		BCDF2F6C1AEECD370093D464 /* CourseNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseNode.swift; sourceTree = "<group>"; };
+		BCDF2F6E1AEF2FA40093D464 /* CourseDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseDetailView.swift; sourceTree = "<group>"; };
+		BCDF2F701AEF33010093D464 /* CD.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CD.xib; sourceTree = "<group>"; };
 		BCE9B9391AE1D12F00895A80 /* settingsButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = settingsButton.png; path = boscc/settingsButton.png; sourceTree = "<group>"; };
 		BCE9B9551AE1D5ED00895A80 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = back.png; path = boscc/back.png; sourceTree = "<group>"; };
 		BCE9B9591AE1D83300895A80 /* VizViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VizViewController.swift; sourceTree = "<group>"; };
@@ -179,6 +183,8 @@
 				BCE9B95B1AE1D85E00895A80 /* VizView.swift */,
 				BC68DD8C1AE2D6DE00779E0E /* CourseButton.swift */,
 				BC66F8601AED8FA700240115 /* SettingsView.swift */,
+				BCDF2F6E1AEF2FA40093D464 /* CourseDetailView.swift */,
+				BCDF2F701AEF33010093D464 /* CD.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -281,6 +287,7 @@
 				BCE9B9601AE1DB1400895A80 /* grph.png in Resources */,
 				BCE9B93A1AE1D12F00895A80 /* settingsButton.png in Resources */,
 				6AFCA6111AD5E65800176DB8 /* Images.xcassets in Resources */,
+				BCDF2F711AEF33010093D464 /* CD.xib in Resources */,
 				6AFCA6321AD5F01600176DB8 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -299,6 +306,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BCDF2F6F1AEF2FA40093D464 /* CourseDetailView.swift in Sources */,
 				BC6E7A541ADC9B78007BDF6C /* MenueViewController.swift in Sources */,
 				BCE9B95A1AE1D83300895A80 /* VizViewController.swift in Sources */,
 				BC66F85B1AED7DDC00240115 /* BosccStudent.swift in Sources */,

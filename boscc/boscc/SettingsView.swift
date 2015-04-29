@@ -36,13 +36,12 @@ class SettingsView: UIView, UIPickerViewDataSource, UIPickerViewDelegate, UIText
         titleLabel.text = "Save"
             titleLabel.textAlignment = NSTextAlignment.Center
         titleLabel.textColor = UIColor.whiteColor()
-        titleLabel.frame = CGRect(x: 0, y: 0, width: 70, height: 30)
+        titleLabel.frame = CGRect(x: 0, y: 0, width: 60, height: 25)
         _ok.addSubview(titleLabel)
         _ok.addTarget(self, action: "Save", forControlEvents: UIControlEvents.TouchUpInside)
         _back.setBackgroundImage(UIImage(named: "back.png"), forState: UIControlState.Normal)
         _back.addTarget(self, action: "Toggle", forControlEvents: UIControlEvents.TouchUpInside)
-       
-     
+
         if(loggedIn)
         {
             addSubview(majorPicker)
@@ -50,8 +49,6 @@ class SettingsView: UIView, UIPickerViewDataSource, UIPickerViewDelegate, UIText
         }
         else
         {
-            
-            
             passInput.backgroundColor = UIColor.whiteColor()
             passInput2.backgroundColor = UIColor.whiteColor()
             emailInput.backgroundColor = UIColor.whiteColor()

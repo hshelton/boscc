@@ -8,7 +8,7 @@
 
 import UIKit
 
-class VizViewController: UIViewController, UIScrollViewDelegate {
+class VizViewController: UIViewController, UIScrollViewDelegate, CourseResponder {
     var graphView: VizView!
     var sView: UIScrollView!
     var colors = ColorPallette()
@@ -29,8 +29,10 @@ class VizViewController: UIViewController, UIScrollViewDelegate {
         var courses: [CourseNode] = [CourseNode]()
         var ok: Bool = false
         var con: ApiConnection = ApiConnection()
-        (courses, ok) = con.GetCourseNodes(user.uid!)
+        var flexCourses: [CourseNode] = [CourseNode]()
         
+        (courses, ok) = con.GetCourseNodes(user.uid!)
+        (flexCourses, ok) = con.GetCourseNodes(user.uid!)
         if(!ok)
         {
             var msg = "Something went wrong while talking to the server. If the error persists, email support for assistance. See help page for more details"
@@ -40,44 +42,81 @@ class VizViewController: UIViewController, UIScrollViewDelegate {
                 self.navigationController?.popToRootViewControllerAnimated(false)}))
             
             self.navigationController?.presentViewController(alert, animated: false, completion: nil)
-          
-   
- 
-        
+
         }
+        var _ok: UIButton = UIButton()
+        _ok.backgroundColor = ColorPallette().darkGray
+        var titleLabel = UILabel()
+        titleLabel.text = "Save"
+        titleLabel.textAlignment = NSTextAlignment.Center
+        titleLabel.textColor = UIColor.whiteColor()
+        titleLabel.font = UIFont.systemFontOfSize(14)
+        titleLabel.frame = CGRect(x: 0, y: 0, width: 40, height: 20)
+
+        
         if(UIDevice.currentDevice().orientation == UIDeviceOrientation.LandscapeLeft || UIDevice.currentDevice().orientation == UIDeviceOrientation.LandscapeRight)
         {
-            graphView = VizView(frame: CGRect(x: 0, y: 0, width: view.bounds.width * 2, height: 1000))
-            buttonHeight = 60
-            
+            _ok.frame = CGRect(x: UIScreen.mainScreen().bounds.width - 50, y: 27, width: 40, height: 20)
+            _ok.addSubview(titleLabel)
+            _ok.addTarget(self, action: "Save", forControlEvents: UIControlEvents.TouchUpInside)
+            _ok.addSubview(titleLabel)
+            graphView = VizView(frame: CGRect(x: 0, y: 0, width: view.bounds.width * 2, height: 1300))
+            buttonHeight = 80
+            graphView.addseparator("Major Requirements - Courses You Have to Take")
             for c in courses
             {
                 var dn: String = ""
                 
             
                 var temp: CourseButton = CourseButton(frame: CGRect(x: 0.0, y: 8, width: view.bounds.width*2/6, height: buttonHeight), courseNumberOrFlexName: c.CourseNumber,  _isFlex: c.IsFlex, _inProgress: false, _complete: c.Complete)
-                
-                graphView.addCourseButton(temp, name: c.CourseNumber)
+                temp.delegate = self
+                graphView.addCourseButtonLandscape(temp, name: c.CourseNumber)
             }
-          
+            graphView.addseparator("Flexible Requirements  - One or More Choices")
+            for c in flexCourses
+            {
+                var dn: String = ""
+                
+                
+                var temp: CourseButton = CourseButton(frame: CGRect(x: 0.0, y: 8, width: view.bounds.width*2/6, height: buttonHeight), courseNumberOrFlexName: c.CourseNumber,  _isFlex: c.IsFlex, _inProgress: false, _complete: c.Complete)
+                temp.delegate = self
+                graphView.addCourseButtonLandscape(temp, name: c.CourseNumber)
+            }
         }
         else
         {
-            graphView = VizView(frame: CGRect(x: 0, y: 0, width: view.bounds.width * 2, height: 1400))
-            for c in courses
+            _ok.frame = CGRect(x: UIScreen.mainScreen().bounds.width - 50, y: 30, width: 40, height: 20)
+            _ok.addSubview(titleLabel)
+            _ok.addTarget(self, action: "Save", forControlEvents: UIControlEvents.TouchUpInside)
+            _ok.addSubview(titleLabel)
+            
+            graphView = VizView(frame: CGRect(x: 0, y: 0, width: view.bounds.width * 2, height: 1600))
+            graphView.addseparator("Major Requirements - Courses You Have to Take")
+            for c in flexCourses
             {
                 var dn: String = ""
                 
                 
                 var temp: CourseButton = CourseButton(frame: CGRect(x: 0.0, y: 8, width: view.bounds.width*2/6, height: buttonHeight), courseNumberOrFlexName: c.CourseNumber,  _isFlex: c.IsFlex, _inProgress: false, _complete: c.Complete)
-                
+                temp.delegate = self
                 graphView.addCourseButton(temp, name: c.CourseNumber)
             }
+            graphView.addseparator("Flexible Requirements - One or More Choices")
+            for c in flexCourses
+            {
+                var dn: String = ""
+                
+                
+                var temp: CourseButton = CourseButton(frame: CGRect(x: 0.0, y: 8, width: view.bounds.width*2/6, height: buttonHeight), courseNumberOrFlexName: c.CourseNumber,  _isFlex: c.IsFlex, _inProgress: false, _complete: c.Complete)
+                temp.delegate = self
+                graphView.addCourseButton(temp, name: c.CourseNumber)
+            }
+            
         }
         
 
         //graphView.backgroundColor = UIColor(patternImage: (UIImage(named:"texture.jpg"))!)
-        graphView.backgroundColor = colors.vizualizeBGColor
+        graphView.backgroundColor = colors.lightGray
         
         sView = UIScrollView(frame: view.bounds)
         sView.backgroundColor = colors.bosccGreen
@@ -91,7 +130,7 @@ class VizViewController: UIViewController, UIScrollViewDelegate {
         sView.minimumZoomScale = 0.5
 
         sView.addSubview(graphView)
-    
+       
         _back.setBackgroundImage(UIImage(named: "back.png"), forState: UIControlState.Normal)
         _back.addTarget(self, action: "Toggle", forControlEvents: UIControlEvents.TouchUpInside)
         _back.frame = CGRect(x: 10, y: 20, width: 30, height: 30)
@@ -103,8 +142,10 @@ class VizViewController: UIViewController, UIScrollViewDelegate {
         
 
         sView.delegate = self
+        
         view.addSubview(sView)
         view.addSubview(_back)
+         view.addSubview(_ok)
         view.addSubview(_label)
     }
   
@@ -120,18 +161,25 @@ class VizViewController: UIViewController, UIScrollViewDelegate {
         return graphView
     }
 
-
-
-    override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
-        if(UIDevice.currentDevice().orientation == UIDeviceOrientation.LandscapeLeft || UIDevice.currentDevice().orientation == UIDeviceOrientation.LandscapeRight)
-        {
-            viewDidLoad()
-        }
-        else
-        {
-           viewDidLoad()
-        }
+    //called from inside a graph view
+    func Save()
+    {
+        
     }
+    
+    func presentDetailsForCourse(courseNumber: String, flex: Bool)
+    {
+        var pC = UIViewController()
+        pC.view = CourseDetailView()
+        var what = pC.view.subviews
+      
+        self.presentViewController(pC, animated: true, completion: nil)
+      
+    }
+    override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
+       viewDidLoad()
+    }
+    
     
     func poptoroot()
     {
@@ -144,3 +192,5 @@ class VizViewController: UIViewController, UIScrollViewDelegate {
     }
 
 }
+
+

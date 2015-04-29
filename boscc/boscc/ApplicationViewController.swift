@@ -127,7 +127,11 @@ class ApplicationViewController: UIViewController, AppStateChangedResponder, UIP
     }
 }
 
-
+protocol CourseResponder: class
+{
+    func presentDetailsForCourse(courseNumber: String, flex: Bool)
+    
+}
 protocol TryRegister: class
 {
     func Register(username: String, password: String, email: String, major: String) -> String

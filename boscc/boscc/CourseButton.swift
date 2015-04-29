@@ -19,6 +19,7 @@ class CourseButton : UIButton
     var inProgress: Bool = false
     var complete: Bool = false
     let colors = ColorPallette()
+    weak var delegate: CourseResponder? = nil
     
     var toggleSwitch: Int = 1
     
@@ -28,7 +29,7 @@ class CourseButton : UIButton
         tL.text = courseNumberOrFlexName
         tL.textAlignment = NSTextAlignment.Center
         tL.frame = frame
-        tL.frame.offset(dx: 0, dy: -5)
+        tL.frame.offset(dx: 20, dy: -5)
         if(_isFlex)
         {
             flexName = courseNumberOrFlexName
@@ -40,12 +41,12 @@ class CourseButton : UIButton
         }
         if(_inProgress)
         {
-            toggleSwitch = 3
+            toggleSwitch = 2
             inProgress = true
         }
         else if(_complete)
         {
-            toggleSwitch = 2
+            toggleSwitch = 3
             complete = true
         }
             //take care of nonsensical parameters
@@ -56,7 +57,7 @@ class CourseButton : UIButton
         addSubview(tL)
         var gesture: UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: "showMessage")
         
-        gesture.minimumPressDuration = 1.5
+        gesture.minimumPressDuration = 0.7
         
         self.addGestureRecognizer(gesture)
         
@@ -79,13 +80,7 @@ class CourseButton : UIButton
     {
         if(toggleSwitch == 1)
         {
-        let alert = UIAlertView()
-        alert.title = "View Schedule"
-        alert.message = "Show Class Times for \(tL.text!)?"
-        alert.addButtonWithTitle("Ok")
-        alert.addButtonWithTitle("Cancel")
-     
-        alert.show()
+            delegate?.presentDetailsForCourse(courseNumber, flex: isFlex)
         
         }
     
@@ -96,6 +91,8 @@ class CourseButton : UIButton
         if(toggleSwitch > 3)
         {
             toggleSwitch = 1
+            setNeedsDisplay()
+            return
         }
         toggleSwitch++
        setNeedsDisplay()
@@ -103,24 +100,24 @@ class CourseButton : UIButton
 
     func markTaken()
     {
-        toggleSwitch = 2
+        toggleSwitch = 3
         setNeedsDisplay()
     }
     
     func markIp()
     {
-        toggleSwitch = 3
+        toggleSwitch = 2
         setNeedsDisplay()
     }
     override func drawRect(rect: CGRect) {
         
         var color: UIColor = colors.notTakenColor
-        if(toggleSwitch == 2)
+        if(toggleSwitch == 3)
         {
             color = colors.takenColor
         }
         
-        if(toggleSwitch == 3)
+        if(toggleSwitch == 2)
         {
             color = colors.inPorgressColor
         }
