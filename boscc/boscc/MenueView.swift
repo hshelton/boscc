@@ -41,6 +41,7 @@ class MenueView: UIView {
      
         _helpButton.setTitle("Help", forState: UIControlState.Normal)
         _helpButton.backgroundColor = colors.darkGray
+        _helpButton.addTarget(self, action: "Help", forControlEvents: UIControlEvents.TouchUpInside)
   
         _titleLabel = UILabel()
         _titleLabel.text = "boscc"; _titleLabel.textAlignment = NSTextAlignment.Center
@@ -81,6 +82,10 @@ class MenueView: UIView {
         _settings.frame.offset(dx: 0.0, dy: 0.0)
         _helpButton.frame.offset(dx: 0.0, dy: 2.0)
         setNeedsDisplay()
+    }
+    func Help()
+    {
+        delegate?.AppStateChanged("Help")
     }
     
     func Settings()

@@ -19,8 +19,17 @@ class SettingsViewController: UIViewController, AppStateChangedResponder, TryReg
         super.viewDidLoad()
         
     }
+    override func shouldAutorotate() -> Bool {
+        return false
+    }
     
+    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        loadView()
+    }
     
+    override func supportedInterfaceOrientations() -> Int {
+        return UIInterfaceOrientation.Portrait.rawValue
+    }
     override func loadView() {
       
         var model = modelDelegate?.RequestUserModel()
@@ -34,7 +43,10 @@ class SettingsViewController: UIViewController, AppStateChangedResponder, TryReg
         }
         settingsView!.delegate = self
         settingsView!.registerDelegate = self
+        
         view = settingsView!
+      
+    
     }
     
     //make the api call to attempt to register this user
@@ -56,8 +68,9 @@ class SettingsViewController: UIViewController, AppStateChangedResponder, TryReg
             delegate?.AppStateChanged("Viz")
             break;
         case "Close":
-            delegate?.AppStateChanged("reload")
+  
             self.navigationController?.popToRootViewControllerAnimated(false)
+                      delegate?.AppStateChanged("reload")
             break
         default:
             return

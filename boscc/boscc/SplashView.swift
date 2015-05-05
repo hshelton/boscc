@@ -59,7 +59,7 @@ var _welcomeLabel: UILabel! = nil
         _titleLabel.frame = CGRect(x: 0, y: bounds.midY - 100, width: bounds.width, height: 200)
 
         _menueButton.frame = CGRectMake(10, 25, 40, 40)
-         _welcomeLabel.frame = CGRect(x: bounds.width - 180, y: 10, width: 180, height:60)
+         _welcomeLabel.frame = CGRect(x: bounds.width - 250, y: 10, width: 180, height:60)
     }
 
     func Toggle()

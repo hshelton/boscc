@@ -19,6 +19,7 @@ class ColorPallette
     let takenColor = UIColor(red: 0, green: 0.65, blue: 0.16, alpha: 0.88)
     let inPorgressColor = UIColor(red: 0.0, green: 0.16, blue: 0.65, alpha: 0.88)
     let vizualizeBGColor = UIColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1.0)
+    let lightBlue = UIColor(red: 0.3, green : 0.3, blue: 0.5, alpha: 1.0)
     
     init()
     {

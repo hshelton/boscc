@@ -13,7 +13,7 @@ class CourseNode
     var Complete: Bool! = false
     var CourseNumber: String! = nil
     var CourseTitle: String! = nil
-
+    var InProgress: Bool?
     var IsFlex: Bool! = false
     var FlexDescription: String! = nil
 
@@ -36,7 +36,18 @@ class CourseNode
     }
     
     
-    
+    func getIP() -> Bool
+    {
+        if(InProgress == nil)
+        {
+            InProgress = false
+            return false
+        }
+        else
+        {
+            return InProgress!
+        }
+    }
     
     
     

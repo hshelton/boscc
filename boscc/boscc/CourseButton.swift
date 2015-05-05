@@ -20,6 +20,7 @@ class CourseButton : UIButton
     var complete: Bool = false
     let colors = ColorPallette()
     weak var delegate: CourseResponder? = nil
+    weak var courseChangedDelagate: courseChanger? = nil
     
     var toggleSwitch: Int = 1
     
@@ -88,6 +89,7 @@ class CourseButton : UIButton
     
     func toggleColor()
     {
+        
         if(toggleSwitch > 3)
         {
             toggleSwitch = 1
@@ -95,6 +97,8 @@ class CourseButton : UIButton
             return
         }
         toggleSwitch++
+        
+        courseChangedDelagate!.changed(self)
        setNeedsDisplay()
     }
 
@@ -136,10 +140,9 @@ class CourseButton : UIButton
     }
     
   
-    
-    
-    
-    
-    
-    
+}
+
+protocol courseChanger: class
+{
+    func changed(cb: CourseButton)
 }

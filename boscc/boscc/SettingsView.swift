@@ -23,6 +23,7 @@ class SettingsView: UIView, UIPickerViewDataSource, UIPickerViewDelegate, UIText
     var _ok: UIButton = UIButton()
      var major: String = "CS"
     var _label: UILabel = UILabel()
+    var login: UIButton = UIButton()
     
     weak var delegate: AppStateChangedResponder? = nil
     weak var registerDelegate: TryRegister? = nil
@@ -44,8 +45,21 @@ class SettingsView: UIView, UIPickerViewDataSource, UIPickerViewDelegate, UIText
 
         if(loggedIn)
         {
-            addSubview(majorPicker)
+            
+            var logoff: UIButton = UIButton(frame: CGRect(x: 0, y: frame.height/2  - 80, width: frame.width - 60, height: 40))
+            logoff.backgroundColor = ColorPallette().darkGray
+            logoff.addTarget(self, action: "wipe", forControlEvents: UIControlEvents.TouchUpInside)
+            logoff.setTitle("Remove Account from Device", forState: UIControlState.Normal)
+            logoff.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+            _label.backgroundColor = colors.bosccGreen
+            _label.text = "Settings"
+            _label.textAlignment = NSTextAlignment.Center
+            _label.textColor = UIColor.whiteColor()
+            addSubview(_label)
+            backgroundColor = colors.bosccGreen
+            addSubview(logoff)
             addSubview(_back)
+            
         }
         else
         {
@@ -79,10 +93,7 @@ class SettingsView: UIView, UIPickerViewDataSource, UIPickerViewDelegate, UIText
             
             emailInput.addSubview(pL4)
             
-            var pL5  = UILabel()
-            pL5.frame = CGRect(x: 0, y: 10, width: bounds.width/2, height: 30)
-            pL5.text = "  Major"
-            majorPicker.addSubview(pL5)
+        
             
             _label.backgroundColor = colors.bosccGreen
             _label.text = "Settings"
@@ -96,6 +107,8 @@ class SettingsView: UIView, UIPickerViewDataSource, UIPickerViewDelegate, UIText
             passInput2.delegate = self
             emailInput.delegate = self
             unameInput.delegate = self
+       
+      
             
              addSubview(majorPicker)
             addSubview(unameInput)
@@ -106,6 +119,12 @@ class SettingsView: UIView, UIPickerViewDataSource, UIPickerViewDelegate, UIText
             addSubview(_label)
             addSubview(_back)
             addSubview(_ok)
+           
+            let alert = UIAlertView()
+            alert.title = "Alert"
+            alert.message = "Password must be at least 6 characters and contain an uppercase and a symbol like H!pCat12. Other fields must not be empty and will work with reasonable data. Hit save to be logged in. ";
+            alert.addButtonWithTitle("ok")
+            alert.show()
          
         }
 
@@ -128,7 +147,7 @@ class SettingsView: UIView, UIPickerViewDataSource, UIPickerViewDelegate, UIText
     }
     
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return 2
+        return 3
     }
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
@@ -136,6 +155,10 @@ class SettingsView: UIView, UIPickerViewDataSource, UIPickerViewDelegate, UIText
         {
      
         return "B.S. CS - UofU"
+        }
+        if(row == 1)
+        {
+            return "B.S. EAE - UofU"
         }
  
         return "B.A. Economics - UofU"
@@ -146,6 +169,10 @@ class SettingsView: UIView, UIPickerViewDataSource, UIPickerViewDelegate, UIText
        {
         major = "CS"
         }
+        else if(row == 1)
+       {
+            major = "EAE"
+       }
         else
        {
         major = "ECON"
@@ -171,10 +198,13 @@ class SettingsView: UIView, UIPickerViewDataSource, UIPickerViewDelegate, UIText
            
             var temp = CGRectZero
             var r: CGRect = bounds
+           
             (temp, r) = bounds.rectsByDividing(r.height/7.5, fromEdge: .MinYEdge)
             _label.frame = temp
              _back.frame = CGRect(x: 10, y: 20, width: 30, height: 30)
             _ok.frame = CGRect(x: bounds.width - 80, y: 20, width: 70, height: 30)
+  
+        
             (unameInput.frame, r) = r.rectsByDividing(r.height/4, fromEdge: .MinYEdge)
             (emailInput.frame, r) = r.rectsByDividing(r.height/3, fromEdge: .MinYEdge)
             var passBlock: CGRect = CGRectZero
@@ -182,12 +212,12 @@ class SettingsView: UIView, UIPickerViewDataSource, UIPickerViewDelegate, UIText
             (passInput.frame, passInput2.frame) = passBlock.rectsByDividing(passBlock.width/2, fromEdge: .MinXEdge)
       
             majorPicker.frame = r
-        
+            
             unameInput.frame = unameInput.frame.rectByInsetting(dx: 10, dy: 0)
             emailInput.frame = emailInput.frame.rectByInsetting(dx: 10, dy: 0)
             passInput.frame = passInput.frame.rectByInsetting(dx: 10, dy: 0)
             passInput2.frame = passInput2.frame.rectByInsetting(dx: 10, dy: 0)
-            majorPicker.frame = majorPicker.frame.rectByInsetting(dx: 10, dy: 0)
+            majorPicker.frame = majorPicker.frame.rectByInsetting(dx: 10, dy: -80)
             
             var border = CALayer()
             var width = CGFloat(2.0)
@@ -212,11 +242,19 @@ class SettingsView: UIView, UIPickerViewDataSource, UIPickerViewDelegate, UIText
              border.borderWidth = width
             emailInput.layer.addSublayer(border)
             emailInput.layer.masksToBounds = true
-
+            
+            
+            
+            if(bounds.width > bounds.height)
+            {
+                _label.frame.inset(dx: 0, dy: -10)
+  
+            }
+        
         }
 
         setNeedsDisplay()
-    }
+         }
     func Save()
     {
         var ok: Bool = true
@@ -246,6 +284,7 @@ class SettingsView: UIView, UIPickerViewDataSource, UIPickerViewDelegate, UIText
                 alert.message = "The two passwords don't match"
                 alert.addButtonWithTitle("ok")
                 alert.show()
+                return
             }
         }
         if(!ok)
@@ -255,6 +294,7 @@ class SettingsView: UIView, UIPickerViewDataSource, UIPickerViewDelegate, UIText
         alert.message = "Password must be at least 6 characters and contain an uppercase and a symbol. Other fields must not be empty";
         alert.addButtonWithTitle("ok")
         alert.show()
+            return
         }
         else
         {
@@ -264,24 +304,36 @@ class SettingsView: UIView, UIPickerViewDataSource, UIPickerViewDelegate, UIText
             emailInput.enabled = false
             _ok.enabled = false
             majorPicker.userInteractionEnabled = false
-        
-            let alert = UIAlertView()
-            alert.title = "Alert"
-            var message: String = ""
-            alert.addButtonWithTitle("ok")
-          
+            
             
             var result = registerDelegate?.Register(unameInput.text, password: passInput.text, email: emailInput.text, major: major)
             //if registration is successful
             if(result == "success")
             {
-               delegate?.AppStateChanged("Close")
+                delegate?.AppStateChanged("Close")
             }
             else
             {
-                message = result!;
-                  alert.show()
+                let alert = UIAlertView()
+                alert.title = "Alert"
+         
+                alert.addButtonWithTitle("ok")
+                alert.message = "Please force close the app before using again"
+                alert.show()
+                
+                unameInput.enabled = true
+                passInput2.enabled = true
+                passInput.enabled = true
+                emailInput.enabled = true
+                _ok.enabled = true
+                majorPicker.userInteractionEnabled = true
             }
+            
+            
+
+        
+            
+          
         }
     }
     func textFieldShouldReturn(textField: UITextField) -> Bool {
@@ -291,6 +343,20 @@ class SettingsView: UIView, UIPickerViewDataSource, UIPickerViewDelegate, UIText
     
     func textFieldShouldEndEditing(textField: UITextField) -> Bool {
         return true
+    }
+    func wipe()
+    {
+        
+        ApiConnection().wipeLocal()
+        let alert = UIAlertView()
+        alert.title = "Alert"
+        
+        alert.addButtonWithTitle("ok")
+        alert.message = "Your registration attempt did not go through. Check try a different username, make sure your passwords are ok, and that your email is valid"
+        alert.show()
+        
+        delegate?.AppStateChanged("Close")
+
     }
     
     func Settings()

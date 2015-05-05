@@ -31,7 +31,7 @@ class VizView:  UIView {
    
     func addseparator(text: String)
     {
-        var offset: CGFloat = 25
+        var offset: CGFloat = 45
         if(cc == 0)
         {
             offset = 0

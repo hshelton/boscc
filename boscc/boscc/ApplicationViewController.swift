@@ -15,6 +15,7 @@ class ApplicationViewController: UIViewController, AppStateChangedResponder, UIP
     var menueViewController: MenueViewController = MenueViewController()
     var vizVC: VizViewController = VizViewController()
     var settingsVC: SettingsViewController = SettingsViewController()
+     var vc: UIViewController = UIViewController()
     var con: ApiConnection = ApiConnection()
     var user: BosccStudent = BosccStudent()
     
@@ -24,12 +25,29 @@ class ApplicationViewController: UIViewController, AppStateChangedResponder, UIP
         
     }
 
+    override func viewWillAppear(animated: Bool) {
+        con = ApiConnection()
+        var uid = con.getUid()
+        if(uid == "NOT FOUND")
+        {
+            user.loggedIn = false
+            user.uid = nil
+            user.uname = nil
+            user.major = nil
+        }
+        loadView()
+    
+    }
+    
   override func loadView() {
     con = ApiConnection()
     var uid = con.getUid()
     if(uid == "NOT FOUND")
     {
         user.loggedIn = false
+        user.uid = nil
+        user.uname = nil
+        user.major = nil
     }
     else
     {
@@ -37,10 +55,7 @@ class ApplicationViewController: UIViewController, AppStateChangedResponder, UIP
         user.uname = con.getUname()
         user.uid = con.getUid()
         user.major = con.getMajor()
-        
 
-        
-        
     }
     portraitView.delegate = self
     landscapeView.delegate = self
@@ -58,7 +73,7 @@ class ApplicationViewController: UIViewController, AppStateChangedResponder, UIP
         portraitView._welcomeLabel.numberOfLines = 0
         portraitView._welcomeLabel.lineBreakMode = NSLineBreakMode.ByWordWrapping
         portraitView._welcomeLabel.font = UIFont.boldSystemFontOfSize(14.0)
-        portraitView._welcomeLabel.frame = CGRect(x: UIScreen.mainScreen().bounds.width - 50, y: 10, width: 180, height:60)
+        portraitView._welcomeLabel.frame = CGRect(x: UIScreen.mainScreen().bounds.width - 250, y: 10, width: 180, height:60)
    
         landscapeView._welcomeLabel.text = "Welcome, \n" +
         user.uname!
@@ -66,7 +81,7 @@ class ApplicationViewController: UIViewController, AppStateChangedResponder, UIP
         landscapeView._welcomeLabel.lineBreakMode = NSLineBreakMode.ByWordWrapping
         landscapeView._welcomeLabel.font = UIFont.boldSystemFontOfSize(14.0)
         
-        landscapeView._welcomeLabel.frame = CGRect(x: UIScreen.mainScreen().bounds.width - 250, y: 10, width: 200, height: 60)
+        landscapeView._welcomeLabel.frame = CGRect(x: UIScreen.mainScreen().bounds.width - 300, y: 10, width: 200, height: 60)
     }
     view = portraitView
 
@@ -97,8 +112,21 @@ class ApplicationViewController: UIViewController, AppStateChangedResponder, UIP
                     navigationController?.pushViewController(settingsVC, animated: true)
             break
             case "reload":
-             loadView()
-            break
+                navigationController?.popToRootViewControllerAnimated(false)
+                loadView()
+             view.setNeedsDisplay()
+            settingsVC = SettingsViewController()
+            settingsVC.delegate = self
+             
+            case "Help":
+          
+           var hv: HelpView = HelpView(frame: UIScreen.mainScreen().bounds)
+           hv.delegate = self
+           vc.view = hv
+           navigationController?.pushViewController(vc, animated: true)
+           
+           break;
+            
         default:
             return
         }
@@ -120,7 +148,18 @@ class ApplicationViewController: UIViewController, AppStateChangedResponder, UIP
     }
     
     func RequestUserModel() -> BosccStudent {
+        con = ApiConnection()
+        var uid = con.getUid()
+        if(uid == "NOT FOUND")
+        {
+            user.loggedIn = false
+            user.uid = nil
+            user.uname = nil
+            user.major = nil
+        }
+        
         return user
+
     }
     func UpdateYourModel(model: BosccStudent) {
         user = model
@@ -130,6 +169,8 @@ class ApplicationViewController: UIViewController, AppStateChangedResponder, UIP
 protocol CourseResponder: class
 {
     func presentDetailsForCourse(courseNumber: String, flex: Bool)
+    func supplyCourseNodes() -> [CourseNode]
+    func supplyFlexNodes() -> [CourseNode]
     
 }
 protocol TryRegister: class

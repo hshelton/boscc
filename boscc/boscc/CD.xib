@@ -10,7 +10,7 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="center" ambiguous="YES" misplaced="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="K2g-3F-hpm">
+                <tableView clipsSubviews="YES" contentMode="redraw" misplaced="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="K2g-3F-hpm">
                     <rect key="frame" x="16" y="108" width="230" height="400"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
@@ -24,6 +24,7 @@
                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="K2g-3F-hpm" secondAttribute="bottom" constant="15" id="D9K-dV-lNn"/>
                 <constraint firstAttribute="trailing" secondItem="K2g-3F-hpm" secondAttribute="trailing" constant="15" id="IHQ-8r-gaC"/>
                 <constraint firstItem="K2g-3F-hpm" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="b4u-cF-52c"/>
+                <constraint firstItem="K2g-3F-hpm" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="75" id="sJ1-Hx-E0o"/>
                 <constraint firstAttribute="bottom" secondItem="K2g-3F-hpm" secondAttribute="bottom" constant="5" id="yWc-pH-rgb"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>

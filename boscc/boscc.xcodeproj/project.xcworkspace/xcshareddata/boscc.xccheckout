@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>768A72EE-7A60-43D7-80A7-5582EA925AC5</string>
 	<key>IDESourceControlProjectName</key>
-	<string>boscc</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>35983327DB9862AF0E3E6165B4101409DD1A4C8E</key>
 		<string>http://github.com/hshelton/boscc.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>boscc/boscc.xcodeproj</string>
+	<string>boscc/boscc.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>35983327DB9862AF0E3E6165B4101409DD1A4C8E</key>
