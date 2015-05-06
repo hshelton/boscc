@@ -39,7 +39,7 @@ class MenueView: UIView {
         _settings.backgroundColor = colors.darkGray
         _settings.addTarget(self, action: "Settings", forControlEvents: UIControlEvents.TouchUpInside)
      
-        _helpButton.setTitle("Help", forState: UIControlState.Normal)
+        _helpButton.setTitle("Help/Tutorial", forState: UIControlState.Normal)
         _helpButton.backgroundColor = colors.darkGray
         _helpButton.addTarget(self, action: "Help", forControlEvents: UIControlEvents.TouchUpInside)
   
