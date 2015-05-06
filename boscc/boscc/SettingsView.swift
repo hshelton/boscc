@@ -291,7 +291,7 @@ class SettingsView: UIView, UIPickerViewDataSource, UIPickerViewDelegate, UIText
         {
         let alert = UIAlertView()
         alert.title = "Alert"
-        alert.message = "Password must be at least 6 characters and contain an uppercase and a symbol. Other fields must not be empty";
+        alert.message = "Password must be at least 6 characters and contain an uppercase and a symbol and a number. Other fields must not be empty";
         alert.addButtonWithTitle("ok")
         alert.show()
             return
@@ -314,11 +314,13 @@ class SettingsView: UIView, UIPickerViewDataSource, UIPickerViewDelegate, UIText
             }
             else
             {
+          
+                
                 let alert = UIAlertView()
                 alert.title = "Alert"
-         
+                
                 alert.addButtonWithTitle("ok")
-                alert.message = "Please force close the app before using again"
+                alert.message = "Your registration attempt did not go through. Check try a different username, make sure your passwords are ok, and that your email is valid"
                 alert.show()
                 
                 unameInput.enabled = true
@@ -348,13 +350,13 @@ class SettingsView: UIView, UIPickerViewDataSource, UIPickerViewDelegate, UIText
     {
         
         ApiConnection().wipeLocal()
+
         let alert = UIAlertView()
         alert.title = "Alert"
         
         alert.addButtonWithTitle("ok")
-        alert.message = "Your registration attempt did not go through. Check try a different username, make sure your passwords are ok, and that your email is valid"
+        alert.message = "Please force close the app before using again"
         alert.show()
-        
         delegate?.AppStateChanged("Close")
 
     }

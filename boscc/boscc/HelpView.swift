@@ -21,7 +21,7 @@ override init(frame: CGRect)
         backgroundColor = ColorPallette().bosccGreen
     var viewOfferings: UIButton = UIButton(frame: CGRect(x: 10, y: 20, width: frame.width - 20 , height: 30))
     var label: UILabel = UILabel(frame: viewOfferings.frame)
-    label.text = "Help"
+    label.text = "Help/Tutorial"
     
     label.textColor = UIColor.whiteColor()
     label.textAlignment = NSTextAlignment.Center
@@ -64,7 +64,7 @@ required init(coder aDecoder: NSCoder) {
 
     func link()
     {
-        let url = NSURL(string: "http://boscc.io/iosTutorial")
+        let url = NSURL(string: "http://boscc.io/home/iOSTutorial")
        
         
         let application=UIApplication.sharedApplication()
@@ -73,7 +73,7 @@ required init(coder aDecoder: NSCoder) {
     }
     func link2()
     {
-        let url = NSURL(string: "http://boscc.io/iosHelp")
+        let url = NSURL(string: "http://boscc.io/home/iOSHelp")
         
         
         let application=UIApplication.sharedApplication()
